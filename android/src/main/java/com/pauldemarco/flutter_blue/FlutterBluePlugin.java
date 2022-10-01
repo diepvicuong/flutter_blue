@@ -250,6 +250,28 @@ public class FlutterBluePlugin implements FlutterPlugin, ActivityAware, MethodCa
                     pendingResult = result;
                     break;
                 }
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED)
+                {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                    {
+                        ActivityCompat.requestPermissions(
+                                activityBinding.getActivity(),
+                                new String[]{
+                                Manifest.permission.BLUETOOTH_CONNECT}, 2);
+                        break;
+                    }
+                }
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED)
+                {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                    {
+                        ActivityCompat.requestPermissions(
+                                activityBinding.getActivity(),
+                                new String[]{
+                                        Manifest.permission.BLUETOOTH_SCAN}, 3);
+                        break;
+                    }
+                }
                 startScan(call, result);
                 break;
             }
